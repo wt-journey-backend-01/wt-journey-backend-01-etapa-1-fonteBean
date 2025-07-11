@@ -36,22 +36,19 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'views/', 'index.html'));
 });
 
-app.get('/contato', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/ contato.html'));
-});
-
 
 app.get("/api/lanches", (req,res)=>{
   res.status(200).json(lanches);
 })
 
 app.get('/contato', (req, res) => {
-  res.set('Content-Type', 'text/json');
-  res.sendFile(path.join(__dirname, 'views', 'contato.html'));
+  res.set('Content-Type', 'text/html');
+  res.status(200).sendFile(path.join(__dirname, 'views', 'contato.html'));
 });
 
 app.post('/contato', (req,res)=>{
   const {nome , email, assunto, mensagem} = req.body
+   res.set('Content-Type', 'text/html');
   if(!nome || !email || !assunto || !mensagem){
     res.status(400).sendFile(path.join(__dirname, 'public', '404.html'))
   }
@@ -182,6 +179,7 @@ app.post('/contato', (req,res)=>{
 
 app.get('/sugestao', (req,res)=>{
   const {nome, ingredientes} = req.query;
+   res.set('Content-Type', 'text/html');
   if(nome && ingredientes){
     res.send(`<!DOCTYPE html>
 <html lang="pt-br">
