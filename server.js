@@ -37,12 +37,12 @@ app.get('/', (req, res) => {
 });
 
 app.get('/contato', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/', 'contato.html'));
+  res.sendFile(path.join(__dirname, 'views/ contato.html'));
 });
 
 
 app.get("/api/lanches", (req,res)=>{
-  res.status(200).json(lanches[0].nome);
+  res.status(200).json(lanches);
 })
 
 app.get('/contato', (req, res) => {
@@ -56,7 +56,7 @@ app.post('/contato', (req,res)=>{
     res.status(400).sendFile(path.join(__dirname, 'public', '404.html'))
   }
   
-  res.status(201).send(`<!DOCTYPE html>
+  res.status(200).send(`<!DOCTYPE html>
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
