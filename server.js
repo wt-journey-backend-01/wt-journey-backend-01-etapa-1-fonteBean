@@ -1,13 +1,12 @@
 const express = require('express')
-const morgan = require('morgan');
-const path = require('path');
+
 
 const app = express();
 const PORT = 3000;
 
 
-app.use(morgan('common'));
-app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(express.static(__dirname + 'public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -35,7 +34,7 @@ const contato = []
 const sugestao = []
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/', 'index.html'));
+  res.sendFile(__dirname + '/views/index.html');
 });
 
 
@@ -45,15 +44,17 @@ app.get("/api/lanches", (req,res)=>{
 
 app.get('/contato', (req, res) => {
   res.set('Content-Type', 'text/html');
-  res.status(200).sendFile(path.join(__dirname, 'views', 'contato.html'));
+  res.status(200).sendFile(__dirname+ '/views/contato.html');
 });
 
-  app.post('/contato', (req,res)=>{
+
+
+app.post('/contato', (req,res)=>{
     console.log(req.body)
     const {nome,email,assunto,mensagem} = req.body
     res.set('Content-Type', 'text/html');
     if(!nome || !email || !assunto || !mensagem){
-      res.status(400).sendFile(path.join(__dirname, 'public', '404.html'))
+     res.status(404).sendFile(__dirname +'/public/404.html')
     }
     
     res.status(200).send(`<!DOCTYPE html>
@@ -88,7 +89,7 @@ app.get('/contato', (req, res) => {
             <a class="navbar-brand" href="#">
               <img
                 id="logo"
-                src="/public/images/logo-devburguer.png"
+                src="public/images/logo-devburguer.png"
                 alt="Logo DevBurguer"
               />
             </a>
@@ -268,7 +269,7 @@ app.get('/sugestao', (req,res)=>{
                 role="alert"
               >
                 <i class="bi bi-check-circle-fill me-2 fs-4"></i>
-                <h1 class="h3 mb-0">Obrigado ${nome}!</h1>
+                <h1 class="h3 mb-0">Obrigado!</h1>
               </div>
 
               <p class="lead mt-3">Sua sugestao foi salva com sucesso.</p>
@@ -278,7 +279,10 @@ app.get('/sugestao', (req,res)=>{
               <h2 class="h5 text-start mt-4">Receita enviada:</h2>
               <div class="text-start">
                 <p class="mb-2">
-                  <span class="text-muted">${ingredientes}</span>
+                  <span class="text-muted">Nome: ${nome}</span>
+                </p>
+                <p class="mb-2">
+                  <span class="text-muted">Ingredientes: ${ingredientes}</span>
                 </p>
               </div>
 
@@ -299,14 +303,14 @@ app.get('/sugestao', (req,res)=>{
 </html>
 `)
   }else{
-     res.status(400).sendFile(path.join(__dirname, 'public', '404.html'))
+    res.status(404).sendFile(__dirname +'/public/404.html')
   }
 })
 
 
 
 app.use((req,res)=>{
-  res.status(404).sendFile(path.join(__dirname, 'public', '404.html'))
+  res.status(404).sendFile(__dirname +'/public/404.html')
 })
 
 
